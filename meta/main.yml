@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  author: DevOps
-  description: Role template
+  author: Pawel Krupa
+  description: HAProxy role
   company: Sointeractive
   min_ansible_version: 1.9
   platforms:
@@ -10,10 +10,10 @@ galaxy_info:
        - all
    - name: Ubuntu
      versions:
-       - 14.04
-       - 16.04
+       - 
   galaxy_tags:
-   - template
+   - reverse proxy
+   - haproxy
 
 #dependencies:
 #  - { role: username.common }

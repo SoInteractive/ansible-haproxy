@@ -1,0 +1,34 @@
+# {{ ansible_managed }}
+
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    user haproxy
+    group haproxy
+    daemon
+    stats socket {{ haproxy_stats_socket }} mode 660 level admin
+ 
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+{% for timeout in haproxy_timeouts %}
+    timeout {{ timeout.type }} {{ timeout.value }}
+{% endfor %}
+{% for error in haproxy_errorfiles %}
+    errorfile {{ error.type }} {{ error.path }}
+{% endfor %}
+
+{% if haproxy_stats_enabled | bool %}
+listen haproxy_stats
+    bind {{ haproxy_stats_address }}:{{ haproxy_stats_port }}
+    log global
+    maxconn 3
+    stats enable
+    stats hide-version
+    stats show-node
+    stats auth "{{ haproxy_stats_user }}:{{ haproxy_stats_pass }}"
+    stats uri {{ haproxy_stats_uri }}
+{% endif %}

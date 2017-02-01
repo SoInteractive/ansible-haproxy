@@ -10,3 +10,15 @@
   tags:
     - always
 
+- include: install.yml
+
+- include: post_install.yml
+
+- name: Create haproxy conf.d dir
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - { path: "/etc/haproxy" }
+    - { path: "/etc/haproxy/conf.d" }

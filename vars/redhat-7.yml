@@ -1,0 +1,2 @@
+haproxy_distro_packages:
+  - haproxy

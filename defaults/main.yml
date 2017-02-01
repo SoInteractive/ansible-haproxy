@@ -1,0 +1,52 @@
+---
+haproxy_stats_socket: /run/haproxy/admin.sock
+haproxy_stats_enabled: True
+haproxy_stats_port: 1936
+haproxy_stats_address: "localhost"
+haproxy_stats_uri: "/"
+haproxy_stats_user: "admin"
+haproxy_stats_pass: "password"
+
+haproxy_timeouts:
+  - { type: "connect", value: 5000 }
+  - { type: "client",  value: 50000 }
+  - { type: "server",  value: 50000 }
+
+haproxy_errorfiles:
+  - { type: 400, path: "/etc/haproxy/errors/400.http" }
+  - { type: 403, path: "/etc/haproxy/errors/403.http" }
+  - { type: 408, path: "/etc/haproxy/errors/408.http" }
+  - { type: 500, path: "/etc/haproxy/errors/500.http" }
+  - { type: 502, path: "/etc/haproxy/errors/502.http" }
+  - { type: 503, path: "/etc/haproxy/errors/503.http" }
+  - { type: 504, path: "/etc/haproxy/errors/504.http" }
+
+haproxy_bind_on_non_local: True
+
+
+
+
+
+
+haproxy_backup_nodes: []
+
+haproxy_hatop_download_url: "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/hatop/hatop-0.7.7.tar.gz"
+
+
+
+# This is just an example, which should be overridden!
+haproxy_servers:
+  - { name: "api",
+      acl: LIST,
+      use_backend: LIST,
+      default_backend: "default" }
+  - { name: "get_backend", 
+      servers: [
+        { name: "api_get-1",
+          address: "api_get-1.domain:8080",
+          options: "check inter 1s" },
+        { name: "api_get-2",
+          address: "api_get-2.domain:8080",
+          options: "check inter 1s backup" }] }}
+  - { name:
+
