@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: DevOps
+  description: Role template
+  company: Sointeractive
+  min_ansible_version: 1.9
+  platforms:
+   - name: EL
+     versions:
+       - all
+   - name: Ubuntu
+     versions:
+       - 14.04
+       - 16.04
+  galaxy_tags:
+   - template
+
+#dependencies:
+#  - { role: username.common }
+
