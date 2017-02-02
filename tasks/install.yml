@@ -2,7 +2,7 @@
 - name: Install HAProxy Packages
   package:
     name: "{{ item }}"
-    state: "{{ haproxy_package_state }}"
+    state: "installed"
   register: install_packages
   until: install_packages|success
   retries: 5
@@ -19,3 +19,4 @@
     - { path: "/etc/haproxy/conf.d" }
 
 - include: install_hatop.yml
+  when: haproxy_install_hatop

@@ -2,11 +2,11 @@
 - name: "Create haproxy service config files"
   template:
     src: service.j2
-    dest: "/etc/haproxy/conf.d/{{ item.service.haproxy_service_name }}"
-  with_items: "{{ haproxy_service_configs | default([]) }}"
-
+    dest: "/etc/haproxy/conf.d/{{ item.0 + 1 }}-{{ item.1.service.name }}"
+#    dest: "/etc/haproxy/conf.d/test"
+  with_indexed_items: "{{ haproxy_services | default([]) }}"
   notify: Restart haproxy
-
+  
 - name: Prevent SELinux from preventing haproxy from binding to arbitrary ports
   seboolean:
     name: haproxy_connect_any

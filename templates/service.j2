@@ -1,0 +1,39 @@
+#
+### {{ ansible_managed }} ###
+
+{% set service = haproxy_services[item.0]["service"] %}
+{% set service_name = item.1.service.name %}
+{% if service.servers is not defined %}
+{%  set type = "frontend" %}
+{% elif service.bind_port is not defined %}
+{%  set type = "backend" %}
+{% else %}
+{%  set type = "listen" %}
+{% endif %}
+{# SERVICE TYPE AND ITS MODE #}
+{{ type }} {{ service_name }}
+{% if service.bind_port is defined %}
+    bind {{ haproxy_vip_address }}:{{ service.bind_port }}
+{% endif %}
+{% if service.mode is defined %}
+    mode {{ service.mode }}
+{% endif %}
+{# ADDITIONAL OPTIONS #}
+{% for option in service.options|default([]) %}
+    {{ option.type }} {{ option.parameter }}
+{% endfor %}
+{# ACLs AND BACKENDs #}
+{% for acl in service.acls | default([]) %}
+    acl {{ acl.name }} {{ acl.expression }}
+{% endfor %}
+{% for backend in service.backends | default([]) %}
+{%   if backend.default|default(False)|bool %}
+    default_backend {{ backend.name }}
+{%   else %}
+    use_backend {{ backend.name }} if {{ backend.acl }}
+{%   endif %}
+{% endfor %}
+{# SERVICE SERVERS #}
+{% for srv in service.servers | default([]) %}
+    server {{ srv.name }} {{ srv.address }} {{ srv.options }}
+{% endfor %}
