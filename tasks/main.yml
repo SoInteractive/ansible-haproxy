@@ -10,6 +10,6 @@
   tags:
     - always
 
-#- include: install.yml
+- include: install.yml
 
 - include: post_install.yml
