@@ -19,6 +19,7 @@
   assemble:
     src: "/etc/haproxy/conf.d"
     dest: "/etc/haproxy/haproxy.cfg"
+    backup: yes
   notify: Restart haproxy
 
 - name: Enable haproxy services
