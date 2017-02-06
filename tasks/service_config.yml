@@ -1,8 +1,15 @@
 ---
-- name: "Create haproxy service config files"
+- name: Empty conf.d directory
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_fileglob:
+    - "/etc/haproxy/conf.d/*"
+
+- name: Create haproxy service config files
   template:
     src: service.j2
-    dest: "/etc/haproxy/conf.d/{{ item.0 + 1 }}-{{ item.1.service.name }}"
+    dest: "/etc/haproxy/conf.d/{{ '%02d' % (item.0 + 1) }}-{{ item.1.service.name }}"
 #    dest: "/etc/haproxy/conf.d/test"
   with_indexed_items: "{{ haproxy_services | default([]) }}"
   notify: Restart haproxy
