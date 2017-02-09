@@ -1,15 +1,4 @@
 ---
-- name: Get files in conf.d directory
-  find: 
-    path: "/etc/haproxy/conf.d"
-  register: conf_files
-
-- name: Empty conf.d directory
-  file:
-    path: "{{ item.path }}"
-    state: absent
-  with_items: "{{ conf_files.files }}"
-
 - name: Create haproxy service config files
   template:
     src: service.j2

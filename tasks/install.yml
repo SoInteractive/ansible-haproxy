@@ -18,5 +18,16 @@
     - { path: "/etc/haproxy" }
     - { path: "/etc/haproxy/conf.d" }
 
+- name: Get files in conf.d directory
+  find: 
+    path: "/etc/haproxy/conf.d"
+  register: conf_files
+
+- name: Ensure conf.d directory is empty
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ conf_files.files }}"
+
 - include: install_hatop.yml
   when: haproxy_install_hatop
