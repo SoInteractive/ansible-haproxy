@@ -4,6 +4,9 @@
     url: "{{ haproxy_hatop_download_url }}"
     dest: "/var/cache/{{ haproxy_hatop_download_url | basename }}"
     force: yes
+  environment:
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
 
 - name: Create HATop directory
   file:

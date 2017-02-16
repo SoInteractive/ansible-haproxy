@@ -4,3 +4,4 @@
     name: "haproxy"
     state: "restarted"
     enabled: "yes"
+  retries: 5
