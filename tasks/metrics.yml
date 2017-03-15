@@ -1,0 +1,11 @@
+---
+- name: Ensure directory exists
+  file:
+    path: "/etc/telegraf/telegraf.d"
+    state: directory
+
+- name: Create telegraf plugin config
+  template:
+    src: haproxy_telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.d/haproxy.conf
+
