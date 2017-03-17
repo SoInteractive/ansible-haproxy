@@ -1,2 +1,2 @@
 [[inputs.haproxy]]
-  urls = ["http://{% if haproxy_stats_user != '' %}{{ haproxy_stats_user }}:{{ haproxy_stats_pass }}@{% endif %}localhost{{ haproxy_stats_uri }}?stats", "/var/run/haproxy*.sock"]
+  urls = ["http://{% if haproxy_stats_user != '' %}{{ haproxy_stats_user }}:{{ haproxy_stats_pass }}@{% endif %}{{ haproxy_stats_address }}:{{ haproxy_stats_port }}{{ haproxy_stats_uri }}?stats"]
