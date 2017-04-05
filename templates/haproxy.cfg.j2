@@ -24,7 +24,7 @@ defaults
 {% if haproxy_stats_enabled | bool %}
 listen haproxy_stats
     bind {{ haproxy_stats_address }}:{{ haproxy_stats_port }}
-    log global
+    no log
     maxconn 3
     stats enable
     stats hide-version
