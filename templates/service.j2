@@ -35,5 +35,5 @@
 {% endfor %}
 {# SERVICE SERVERS #}
 {% for srv in service.servers | default([]) %}
-    server {{ srv.name }} {{ srv.address }} {{ srv.options }}
+    server {{ srv.name }} {{ srv.address }} maxconn 15 {{ srv.options }}
 {% endfor %}
