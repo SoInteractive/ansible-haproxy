@@ -1,26 +1,34 @@
 ---
-- name: Download HATop
-  get_url:
-    url: "{{ haproxy_hatop_download_url }}"
-    dest: "/var/cache/{{ haproxy_hatop_download_url | basename }}"
-    force: yes
-  environment:
-    http_proxy: "{{ http_proxy | default('') }}"
-    https_proxy: "{{ https_proxy | default('') }}"
+- name: Install HATop from repository
+  package:
+    name: hatop
+    state: installed
+  when: ansible_os_family == "Debian"
 
-- name: Create HATop directory
-  file:
-    path: "/opt/{{ haproxy_hatop_download_url | basename | replace('.tar.gz', '') }}"
-    state: directory
-
-- name: Unarchive HATop
-  unarchive:
-    src: "/var/cache/{{ haproxy_hatop_download_url | basename }}"
-    dest: "/opt"
-    copy: "no"
-
-- name: Install HATop
-  command: "install -m 755 bin/hatop /usr/local/bin"
-  changed_when: false
-  args:
-    chdir: "/opt/{{ haproxy_hatop_download_url | basename | replace('.tar.gz', '') }}"
+- block:
+  - name: Download HATop
+    get_url:
+      url: "{{ haproxy_hatop_download_url }}"
+      dest: "/tmp/{{ haproxy_hatop_download_url | basename }}"
+      force: yes
+    environment:
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
+  
+  - name: Create HATop directory
+    file:
+      path: "/opt/{{ haproxy_hatop_download_url | basename | replace('.tar.gz', '') }}"
+      state: directory
+  
+  - name: Unarchive HATop
+    unarchive:
+      src: "/tmp/{{ haproxy_hatop_download_url | basename }}"
+      dest: "/opt"
+      copy: "no"
+  
+  - name: Install HATop
+    command: "install -m 755 bin/hatop /usr/local/bin"
+    changed_when: false
+    args:
+      chdir: "/opt/{{ haproxy_hatop_download_url | basename | replace('.tar.gz', '') }}"
+  when: ansible_os_family != "Debian"
