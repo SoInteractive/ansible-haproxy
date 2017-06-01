@@ -1,9 +1,4 @@
 ---
-- name: Ensure directory exists
-  file:
-    path: "/etc/telegraf/telegraf.d"
-    state: directory
-
 - name: Download HAProxy Exporter to local folder
   become: no
   get_url:
@@ -22,20 +17,17 @@
     src: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
     dest: "/opt/"
     copy: no
-    owner: "{{ haproxy_exporter_service_username }}"
-    group: "{{ haproxy_exporter_service_group }}"
+    creates: "/opt/haproxy_exporter"
 
 - name: Create a symlink for /opt/haproxy_exporter
   file:
     src: "/opt/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64"
     dest: /opt/haproxy_exporter
-    owner: "{{ haproxy_exporter_service_username }}"
-    group: "{{ haproxy_exporter_service_group }}"
     state: link
 
 - name: Copy the HAProxy Exporter systemd service file
   template:
-    src: haproxy_exporter.service.j2
+    src: etc/systemd/system/haproxy_exporter.service.j2
     dest: /etc/systemd/system/haproxy_exporter.service
     owner: root
     group: root
