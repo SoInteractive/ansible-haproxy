@@ -1,2 +1,0 @@
-[[inputs.haproxy]]
-  servers = ["http://{% if haproxy_stats_user != '' %}{{ haproxy_stats_user }}:{{ haproxy_stats_pass }}@{% endif %}{{ haproxy_stats_address }}:{{ haproxy_stats_port }}{{ haproxy_stats_uri }}?stats"]

@@ -8,6 +8,7 @@ haproxy_stats_user: "admin"
 haproxy_stats_pass: "password"
 haproxy_install_hatop: True
 
+haproxy_metrics: true
 
 haproxy_timeouts:
   - { type: "connect", value: 5000 }
@@ -26,10 +27,20 @@ haproxy_errorfiles:
 haproxy_bind_on_non_local: True
 haproxy_hatop_download_url: "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/hatop/hatop-0.7.7.tar.gz"
 
-haproxy_vip_address: "vip.domain"
+haproxy_vip_address: "localhost"
+
+
+haproxy_exporter_version: 0.7.1
+haproxy_exporter_download_url: "https://github.com/prometheus/haproxy_exporter/releases/download/v{{ haproxy_exporter_version }}/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64.tar.gz"
+
+haproxy_scrape_uri: "unix:{{ haproxy_stats_socket }}"
+#haproxy_scrape_uri: "http://{{ haproxy_stats_user }}:{{ haproxy_stats_pass }}@{{ haproxy_stats_address }}:{{ haproxy_stats_port }}{{ haproxy_stats_uri }};csv"
+
+haproxy_exporter_config_flags:
+  'haproxy.scrape-uri': '{{ haproxy_scrape_uri }}'
 
 # This is just an example, which should be overridden!
-haproxy_services:  
+haproxy_services:
   - service:
       name: "api"
       bind_port: 8080
@@ -41,17 +52,17 @@ haproxy_services:
   - service: 
       name: "get_backend"
       servers:
-        - { name: "api-get-1", address: "api-get-1.domain:8080", options: "check inter 1s" }
-        - { name: "api-get-2", address: "api-get-2.domain:8080", options: "check inter 1s backup" }
+        - { name: "api-get-1", address: "localhost:8080", options: "check inter 1s" }
+        - { name: "api-get-2", address: "localhost:8080", options: "check inter 1s backup" }
   - service:
       name: "default_backend"
       options:
         - { type: "option", parameter: "http-server-close" }
-        - { type: "option", parameter: 'httpchk GET /heartbeat HTTP/1.1\r\nHost:\ vip.domain' }
+        - { type: "option", parameter: 'httpchk GET /heartbeat HTTP/1.1\r\nHost:\ localhost' }
         - { type: "http-check", parameter: "expect rstring master" }
       servers:
-        - { name: "api-other-1", address: "api-other-1.domain:8080", options: "check inter 1s" }
-        - { name: "api-other-2", address: "api-other-2.domain:8080", options: "check inter 1s backup" }
+        - { name: "api-other-1", address: "localhost:8080", options: "check inter 1s" }
+        - { name: "api-other-2", address: "localhost:8080", options: "check inter 1s backup" }
   - service:
       name: "rabbit"
       mode: "tcp"
@@ -61,6 +72,6 @@ haproxy_services:
         - { type: "timeout", parameter: "client 3h" }
         - { type: "timeout", parameter: "server 3h" }
       servers:
-        - { name: "rabbit-1", address: "rabbit-1.domain:5672", options: "check inter 1s" }
-        - { name: "rabbit-2", address: "rabbit-2.domain:5672", options: "check inter 1s" }
-        - { name: "rabbit-3", address: "rabbit-3.domain:5672", options: "check inter 1s" }
+        - { name: "rabbit-1", address: "localhost:5672", options: "check inter 1s" }
+        - { name: "rabbit-2", address: "localhost:5672", options: "check inter 1s" }
+        - { name: "rabbit-3", address: "localhost:5672", options: "check inter 1s" }

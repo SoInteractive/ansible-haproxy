@@ -1,11 +1,43 @@
 ---
-- name: Ensure directory exists
+- name: Download HAProxy Exporter to local folder
+  become: no
+  get_url:
+    url: "{{ haproxy_exporter_download_url }}"
+    dest: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
+  run_once: true
+  delegate_to: localhost
+
+- name: propagate HAProxy Exporter
+  copy:
+   src: /tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz 
+   dest: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
+
+- name: Extract HAProxy Exporter into the install directory
+  unarchive:
+    src: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
+    dest: "/opt/"
+    copy: no
+    creates: "/opt/haproxy_exporter"
+
+- name: Create a symlink for /opt/haproxy_exporter
   file:
-    path: "/etc/telegraf/telegraf.d"
-    state: directory
+    src: "/opt/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64"
+    dest: /opt/haproxy_exporter
+    state: link
 
-- name: Create telegraf plugin config
+- name: Copy the HAProxy Exporter systemd service file
   template:
-    src: haproxy_telegraf.conf.j2
-    dest: /etc/telegraf/telegraf.d/haproxy.conf
+    src: etc/systemd/system/haproxy_exporter.service.j2
+    dest: /etc/systemd/system/haproxy_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart haproxy_exporter
 
+- name: Ensure HAProxy Exporter is started and enabled on boot
+  service:
+    name: haproxy_exporter
+    state: started
+    enabled: yes

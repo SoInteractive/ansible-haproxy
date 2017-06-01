@@ -5,3 +5,11 @@
     state: "restarted"
     enabled: "yes"
   retries: 5
+
+- name: reload systemd
+  command: systemctl daemon-reload
+
+- name: restart haproxy_exporter
+  service:
+    name: haproxy_exporter
+    state: restarted
