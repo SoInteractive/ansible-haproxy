@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Pawel Krupa
+  author: Pawel Krupa, Roman Demachkovych (HAProxy exporter)
   description: HAProxy role
   company: Sointeractive
   min_ansible_version: 1.9

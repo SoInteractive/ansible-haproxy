@@ -5,3 +5,6 @@
     state: "restarted"
     enabled: "yes"
   retries: 5
+
+- name: reload systemd
+  command: systemctl daemon-reload

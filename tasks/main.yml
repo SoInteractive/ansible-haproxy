@@ -15,3 +15,4 @@
 - include: post_install.yml
 
 - include: metrics.yml
+  when: haproxy_metrics
