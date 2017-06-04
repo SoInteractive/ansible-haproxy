@@ -1,31 +1,27 @@
-HAProxy ansible role.
+<p><img src="https://cdn.haproxy.com/site/img/events/haproxy.png" alt="haproxy logo" title="haproxy" align="right" height="60" /></p>
+
+Ansible Role: haproxy
 =====================
 
-This role sets up HAProxy load balancer. It supports creating stats interface.
-Services are defined in user-friendly YAML list format (example in defaults/main.yml). 
-Every service creates one file in /etc/haproxy/conf.d on remote host, later from
-those files main haproxy.cfg is created.
+[![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/haproxy/master)](https://ci.devops.sosoftware.pl/blue/organizations/jenkins/SoInteractive%2Fhaproxy/activity) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/99999.svg)](https://galaxy.ansible.com/SoInteractive/haproxy/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
 
-Role Variables
---------------
+Set up HAProxy loadbalancer with stats interface and prometheus-enabled metrics.
 
-Below are the roles variables with the respective default values. 
-```yml
-haproxy_metrics: true
+Example usage
+-------------
 
-haproxy_exporter_version: 0.7.1
-haproxy_exporter_download_url: "https://github.com/prometheus/haproxy_exporter/releases/download/v{{ haproxy_exporter_version }}/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64.tar.gz"
-haproxy_scrape_uri: {{ haproxy_stats_socket }}
-#haproxy_scrape_uri: "http://{{ haproxy_stats_user }}:{{ haproxy_stats_pass }}@{{ haproxy_stats_address }}:{{ haproxy_stats_port }}{{ haproxy_stats_uri }};csv"
-
-haproxy_exporter_config_flags:
-  'haproxy.scrape-uri': '{{ haproxy_scrape_uri }}'
+Use it in a playbook as follows:
+```yaml
+- hosts: all
+  become: true
+  roles:
+    - SoInteractive.haproxy
 ```
 
-Example Playbook
-----------------
+Have a look at the [defaults/main.yml](defaults/main.yml) for role variables
+that can be overridden.
 
-    - hosts: proxy
-      roles:
-         - haproxy
+TODO
+----
 
+- test if unix socket is open

@@ -1,0 +1,51 @@
+---
+- name: Make haproxy bindable on non local addresses
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: 1
+    sysctl_set: yes
+    state: present
+  when: haproxy_bind_on_non_local | bool
+
+- name: Drop base haproxy config
+  template:
+    src: "haproxy.cfg.j2"
+    dest: "/etc/haproxy/conf.d/00-haproxy"
+  notify: Restart haproxy
+
+#- name: Create haproxy service config files
+#  template:
+#    src: service.j2
+#    dest: "/etc/haproxy/conf.d/{{ '%02d' % (item.0 + 1) }}-{{ item.1.service.name }}"
+##    dest: "/etc/haproxy/conf.d/test"
+#  with_indexed_items: "{{ haproxy_services | default([]) }}"
+#  notify: Restart haproxy
+
+- name: Create haproxy service config files
+  template:
+    src: service.j2
+    dest: "/etc/haproxy/conf.d/{{ '%02d' % (item.0 + 1) }}.conf"
+#    dest: "/etc/haproxy/conf.d/test"
+  with_indexed_items: "{{ haproxy_services | default([]) }}"
+  notify: Restart haproxy
+
+- name: Regenerate haproxy configuration
+  assemble:
+    src: "/etc/haproxy/conf.d"
+    dest: "/etc/haproxy/haproxy.cfg"
+    backup: yes
+  notify: Restart haproxy
+
+- name: Prevent SELinux from preventing haproxy from binding to arbitrary ports
+  seboolean:
+    name: haproxy_connect_any
+    state: yes
+    persistent: yes
+  notify:
+    - Restart haproxy
+  when: ansible_selinux and ansible_selinux.status == 'enabled'
+
+- name: Enable haproxy services
+  service:
+    name: "haproxy"
+    enabled: "yes"

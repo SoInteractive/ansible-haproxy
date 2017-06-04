@@ -18,16 +18,25 @@
     - { path: "/etc/haproxy" }
     - { path: "/etc/haproxy/conf.d" }
 
-- name: Get files in conf.d directory
-  find: 
-    path: "/etc/haproxy/conf.d"
-  register: conf_files
+      #- name: Get files in conf.d directory
+      #  find:
+      #    path: "/etc/haproxy/conf.d"
+      #  register: conf_files
+      #
+      #- name: Ensure conf.d directory is empty
+      #  file:
+      #    path: "{{ item.path }}"
+      #    state: absent
+      #  with_items: "{{ conf_files.files }}"
 
-- name: Ensure conf.d directory is empty
+- name: Ensure runtime directory exists
   file:
-    path: "{{ item.path }}"
-    state: absent
-  with_items: "{{ conf_files.files }}"
+    path: "/run/haproxy"
+    state: directory
+    owner: haproxy
+    group: haproxy
 
-- include: install_hatop.yml
-  when: haproxy_install_hatop
+- name: Create tmpfiles entry
+  copy:
+    content: "d /run/haproxy 2775 haproxy haproxy -"
+    dest: "/etc/tmpfiles.d/haproxy.conf"

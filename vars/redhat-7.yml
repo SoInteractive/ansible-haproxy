@@ -1,2 +1,4 @@
 haproxy_distro_packages:
+  - libselinux-python
+  - libsemanage-python
   - haproxy

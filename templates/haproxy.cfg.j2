@@ -17,9 +17,6 @@ defaults
 {% for timeout in haproxy_timeouts %}
     timeout {{ timeout.type }} {{ timeout.value }}
 {% endfor %}
-{% for error in haproxy_errorfiles %}
-    errorfile {{ error.type }} {{ error.path }}
-{% endfor %}
 
 {% if haproxy_stats_enabled | bool %}
 listen haproxy_stats

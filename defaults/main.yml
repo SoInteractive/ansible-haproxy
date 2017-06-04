@@ -15,20 +15,10 @@ haproxy_timeouts:
   - { type: "client",  value: 50000 }
   - { type: "server",  value: 50000 }
 
-haproxy_errorfiles:
-  - { type: 400, path: "/etc/haproxy/errors/400.http" }
-  - { type: 403, path: "/etc/haproxy/errors/403.http" }
-  - { type: 408, path: "/etc/haproxy/errors/408.http" }
-  - { type: 500, path: "/etc/haproxy/errors/500.http" }
-  - { type: 502, path: "/etc/haproxy/errors/502.http" }
-  - { type: 503, path: "/etc/haproxy/errors/503.http" }
-  - { type: 504, path: "/etc/haproxy/errors/504.http" }
-
 haproxy_bind_on_non_local: True
 haproxy_hatop_download_url: "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/hatop/hatop-0.7.7.tar.gz"
 
 haproxy_vip_address: "localhost"
-
 
 haproxy_exporter_version: 0.7.1
 haproxy_exporter_download_url: "https://github.com/prometheus/haproxy_exporter/releases/download/v{{ haproxy_exporter_version }}/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64.tar.gz"
@@ -49,7 +39,7 @@ haproxy_services:
       backends:
         - { name: "get_backend", acl: "get_method" }
         - { name: "default_backend", default: True }
-  - service: 
+  - service:
       name: "get_backend"
       servers:
         - { name: "api-get-1", address: "localhost:8080", options: "check inter 1s" }

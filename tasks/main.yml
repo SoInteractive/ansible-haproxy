@@ -12,7 +12,10 @@
 
 - include: install.yml
 
-- include: post_install.yml
+- include: install_hatop.yml
+  when: haproxy_install_hatop
+
+- include: configure.yml
 
 - include: metrics.yml
   when: haproxy_metrics

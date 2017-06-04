@@ -9,7 +9,7 @@
 
 - name: propagate HAProxy Exporter
   copy:
-   src: /tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz 
+   src: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
    dest: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
 
 - name: Extract HAProxy Exporter into the install directory
@@ -35,9 +35,3 @@
   notify:
     - reload systemd
     - restart haproxy_exporter
-
-- name: Ensure HAProxy Exporter is started and enabled on boot
-  service:
-    name: haproxy_exporter
-    state: started
-    enabled: yes

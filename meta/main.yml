@@ -1,20 +1,20 @@
 ---
 galaxy_info:
   author: Pawel Krupa, Roman Demachkovych (HAProxy exporter)
-  description: HAProxy role
+  description: HAProxy loadbalancer
   company: Sointeractive
+  license: MIT
   min_ansible_version: 1.9
   platforms:
-   - name: EL
-     versions:
-       - all
-   - name: Ubuntu
-     versions:
-       - 
+  - name: Ubuntu
+    versions:
+    - xenial
+  - name: EL
+    versions:
+    - 7
   galaxy_tags:
-   - reverse proxy
-   - haproxy
+  - haproxy
+  - loadbalancer
+  - proxy
 
-#dependencies:
-#  - { role: username.common }
-
+dependencies: []
