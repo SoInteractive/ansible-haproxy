@@ -1,6 +1,7 @@
 ---
 haproxy_stats_socket: "/run/haproxy/admin.sock"
 haproxy_stats_enabled: True
+haproxy_ssl_enabled: False
 haproxy_stats_port: 1936
 haproxy_stats_address: "localhost"
 haproxy_stats_uri: "/"
