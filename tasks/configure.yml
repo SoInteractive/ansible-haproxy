@@ -9,7 +9,7 @@
 
 - name: Create errorfiles dir
   file:
-    path: "/etc/haproxy/errors/"
+    path: "/etc/haproxy/errors"
     state: directory
   when: ansible_distribution == 'CentOS'
 
