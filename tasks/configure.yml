@@ -10,7 +10,7 @@
 -name: Copy errorfiles
   copy:
     src: files/
-    dest: /etc/haproxy/errors
+    dest: /etc/haproxy/errors/
 
 - name: Drop base haproxy config
   template:
