@@ -1,5 +1,5 @@
 <html>
-<header><title> {{ haproxy_errors.short }} </title></header>
+<header><title> {{ item.short }} </title></header>
 <style>
   body {
     background: #582583 }
@@ -35,7 +35,7 @@
     ctx.fillStyle = 'white';
     ctx.fill();
   </script>
-  <h2>{{ haproxy_errors.long }}</h2>
+  <h2>{{ item.long }}</h2>
 </div>
 </body>
 </html>

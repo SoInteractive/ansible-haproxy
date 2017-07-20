@@ -8,9 +8,10 @@
   when: haproxy_bind_on_non_local | bool
 
 - name: Copy errorfiles
-  copy:
-    src: files/
-    dest: /etc/haproxy/errors/
+  template:
+    src: "error_codes.j2"
+    dest: "/etc/haproxy/errors/{{ item.code }}.http"
+  with_items: "{{ haproxy_errors }}"
 
 - name: Drop base haproxy config
   template:
