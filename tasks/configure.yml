@@ -7,6 +7,11 @@
     state: present
   when: haproxy_bind_on_non_local | bool
 
+-name: Copy errorfiles
+  copy:
+    src: files/
+    dest: /etc/haproxy/errors
+
 - name: Drop base haproxy config
   template:
     src: "haproxy.cfg.j2"
