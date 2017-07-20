@@ -7,7 +7,7 @@
     state: present
   when: haproxy_bind_on_non_local | bool
 
--name: Copy errorfiles
+- name: Copy errorfiles
   copy:
     src: files/
     dest: /etc/haproxy/errors/
