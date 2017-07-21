@@ -11,6 +11,17 @@ haproxy_install_hatop: True
 
 haproxy_metrics: true
 
+haproxy_errors:
+  - { code: 400, short: "Bad request", long: "Bad request (400)" }
+  - { code: 403, short: "Forbidden", long: "Forbidden. You may not have necessary permissions (403)" }
+  - { code: 405, short: "Method Not Allowed", long: "Requested method is not supported for this resource (405)" }
+  - { code: 408, short: "Request timeout", long: "Server timed out waiting for the request (408)" }
+  - { code: 429, short: "Too many requests", long: "You may have sent too many requests (429)" }
+  - { code: 500, short: "Internal Server Error", long: "Server has experienced an internal error (500)" }
+  - { code: 502, short: "Bad Gateway", long: "Bad Gateway (502)" }
+  - { code: 503, short: "Service Unavailable", long: "Service you are trying to reach is unavailable (503)" }
+  - { code: 504, short: "Gateway Timeout", long: "Gateway Timeout (504)" }
+
 haproxy_timeouts:
   - { type: "connect", value: 5000 }
   - { type: "client",  value: 50000 }
