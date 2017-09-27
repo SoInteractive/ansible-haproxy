@@ -46,7 +46,9 @@
     src: "/etc/haproxy/conf.d"
     dest: "/etc/haproxy/haproxy.cfg"
     backup: yes
+    validate: 'haproxy -c -V -f %s'
   notify: Restart haproxy
+  register: hpconf
 
 - name: Prevent SELinux from preventing haproxy from binding to arbitrary ports
   seboolean:
