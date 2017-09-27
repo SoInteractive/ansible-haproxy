@@ -1,0 +1,24 @@
+---
+
+- name: Check if conf file exists
+  stat:
+    path: /etc/haproxy/haproxy.cfg
+  register: st
+  failed_when: st.stat.exists != True
+
+- name: Check if error dir exists
+  stat:
+    path: /etc/haproxy/errors
+  register: st
+  failed_when: st.stat.isdir != True
+
+- name: Check if haproxy is running
+  command: systemctl status haproxy
+  changed_when: false
+  register: hpstatus
+  failed_when: hpstatus | failed
+
+- name: Check if haproxy is running (status page test)
+  uri:
+    url: http://localhost:1936/
+    status_code: 401
