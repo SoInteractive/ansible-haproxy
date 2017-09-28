@@ -19,3 +19,8 @@
 
 - include: metrics.yml
   when: haproxy_metrics
+
+- meta: flush_handlers
+
+- include: tests.yml
+  when: hpconf.changed
