@@ -9,7 +9,7 @@
 - name: "Ensure haproxy.cfg contains 'ansible managed' line"
   lineinfile:
     path: /etc/haproxy/haproxy.cfg
-    line: "{{ ansible_managed }}"
+    line: "# {{ ansible_managed }}"
     state: present
   check_mode: yes
   register: contents
