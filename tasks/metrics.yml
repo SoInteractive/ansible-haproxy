@@ -27,11 +27,10 @@
 
 - name: Copy the HAProxy Exporter systemd service file
   template:
-    src: etc/systemd/system/haproxy_exporter.service.j2
+    src: haproxy_exporter.service.j2
     dest: /etc/systemd/system/haproxy_exporter.service
     owner: root
     group: root
     mode: 0644
   notify:
-    - reload systemd
     - restart haproxy_exporter
