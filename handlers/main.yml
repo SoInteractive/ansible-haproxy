@@ -1,16 +1,14 @@
 ---
-- name: reload systemd
-  command: systemctl daemon-reload
-
 - name: Restart haproxy
-  service:
+  systemd:
     name: "haproxy"
     state: "restarted"
     enabled: "yes"
   retries: 5
 
 - name: restart haproxy_exporter
-  service:
+  systemd:
+    daemon_reload: yes
     name: haproxy_exporter
     state: restarted
     enabled: yes
