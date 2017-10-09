@@ -1,4 +1,3 @@
-#
 ### {{ ansible_managed }} ###
 
 {% set service = haproxy_services[item.0] %}
@@ -20,7 +19,7 @@
 {% endif %}
 {# ADDITIONAL OPTIONS #}
 {% for option in service.options|default([]) %}
-    {{ option.type }} {{ option.parameter }}
+    {{ option }}
 {% endfor %}
 {# ACLs AND BACKENDs #}
 {% for acl in service.acls | default([]) %}
@@ -35,5 +34,5 @@
 {% endfor %}
 {# SERVICE SERVERS #}
 {% for srv in service.servers | default([]) %}
-    server {{ srv.name }} {{ srv.address }} maxconn 15 {{ srv.options | default('') }}
+    server {{ srv.name }} {{ srv.address }} {{ srv.options | default('maxconn 15') }}
 {% endfor %}
