@@ -1,8 +1,8 @@
 #
 ### {{ ansible_managed }} ###
 
-{% set service = haproxy_services[item.0]["service"] %}
-{% set service_name = item.1.service.name %}
+{% set service = haproxy_services[item.0] %}
+{% set service_name = item.1.name %}
 {% if service.servers is not defined %}
 {%  set type = "frontend" %}
 {% elif service.bind_port is not defined %}
@@ -35,5 +35,5 @@
 {% endfor %}
 {# SERVICE SERVERS #}
 {% for srv in service.servers | default([]) %}
-    server {{ srv.name }} {{ srv.address }} maxconn 15 {{ srv.options }}
+    server {{ srv.name }} {{ srv.address }} maxconn 15 {{ srv.options | default('') }}
 {% endfor %}

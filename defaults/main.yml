@@ -43,21 +43,18 @@ haproxy_exporter_config_flags:
 
 # This is just an example, which should be overridden!
 haproxy_services:
-  - service:
-      name: "api"
+    - name: "api"
       bind_port: 8080
       acls:
         - { name: "get_method", expression: "method GET" }
       backends:
         - { name: "get_backend", acl: "get_method" }
         - { name: "default_backend", default: True }
-  - service:
-      name: "get_backend"
+    - name: "get_backend"
       servers:
         - { name: "api-get-1", address: "localhost:8080", options: "check inter 1s" }
         - { name: "api-get-2", address: "localhost:8080", options: "check inter 1s backup" }
-  - service:
-      name: "default_backend"
+    - name: "default_backend"
       options:
         - { type: "option", parameter: "http-server-close" }
         - { type: "option", parameter: 'httpchk GET /heartbeat HTTP/1.1\r\nHost:\ localhost' }
@@ -65,8 +62,7 @@ haproxy_services:
       servers:
         - { name: "api-other-1", address: "localhost:8080", options: "check inter 1s" }
         - { name: "api-other-2", address: "localhost:8080", options: "check inter 1s backup" }
-  - service:
-      name: "rabbit"
+    - name: "rabbit"
       mode: "tcp"
       bind_port: 5672
       options:
