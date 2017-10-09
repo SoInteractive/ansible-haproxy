@@ -7,3 +7,28 @@
         state: present
   roles:
     - haproxy
+  vars:
+    haproxy_services:
+      - name: "api"
+        bind_port: 8080
+        acls:
+          - name: "get_method"
+            expression: "method GET"
+        backends:
+          - name: "get_backend"
+            acl: "get_method"
+          - name: "default_backend"
+            default: True
+      - name: "get_backend"
+        servers:
+          - { name: "api-get-1", address: "localhost:8080", options: "check inter 1s" }
+          - { name: "api-get-2", address: "localhost:8080", options: "check inter 1s backup" }
+      - name: "default_backend"
+        options:
+          - "option http-server-close"
+          - 'option httpchk GET /heartbeat HTTP/1.1\r\nHost:\ localhost'
+          - "http-check expect rstring master"
+        servers:
+          - { name: "api-other-1", address: "localhost:8080", options: "check inter 1s" }
+          - { name: "api-other-2", address: "localhost:8080", options: "check inter 1s backup" }
+

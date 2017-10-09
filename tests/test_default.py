@@ -67,7 +67,6 @@ def test_socket(Socket):
         # "unix:///run/haproxy/admin.sock",
         "tcp://127.0.0.1:1936",
         "tcp://127.0.0.1:8080",
-        "tcp://127.0.0.1:5672"
     ]
     for socket in present:
         s = Socket(socket)
