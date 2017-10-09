@@ -21,14 +21,13 @@
             default: True
       - name: "get_backend"
         servers:
-          - { name: "api-get-1", address: "localhost:8080", options: "check inter 1s" }
-          - { name: "api-get-2", address: "localhost:8080", options: "check inter 1s backup" }
+          - { name: "api-get-1", address: "localhost:8080", options: "check inter 10s" }
+          - { name: "api-get-2", address: "localhost:8080", options: "check inter 10s backup" }
       - name: "default_backend"
         options:
           - "option http-server-close"
           - 'option httpchk GET /heartbeat HTTP/1.1\r\nHost:\ localhost'
           - "http-check expect rstring master"
         servers:
-          - { name: "api-other-1", address: "localhost:8080", options: "check inter 1s" }
-          - { name: "api-other-2", address: "localhost:8080", options: "check inter 1s backup" }
-
+          - { name: "api-other-1", address: "localhost:8080", options: "check inter 10s" }
+          - { name: "api-other-2", address: "localhost:8080", options: "check inter 10s backup" }
