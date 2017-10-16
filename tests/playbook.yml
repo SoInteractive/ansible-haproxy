@@ -6,7 +6,7 @@
         name: net-tools
         state: present
   roles:
-    - haproxy
+    - ansible-haproxy
   vars:
     haproxy_services:
       - name: "api"
