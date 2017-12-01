@@ -20,6 +20,9 @@ defaults
     mode    http
     option  httplog
     option  dontlognull
+{% if haproxy_forwardfor %}
+    option  forwardfor
+{% endif %}
 {% for timeout in haproxy_timeouts %}
     timeout {{ timeout.type }} {{ timeout.value }}
 {% endfor %}
