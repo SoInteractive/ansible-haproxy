@@ -1,4 +1,11 @@
 ---
+- name: Add repository | [Debian/Ubuntu]
+  apt_repository:
+    repo: "ppa:vbernat/haproxy-{{ haproxy_version }}"
+    update_cache: yes
+    validate_certs: no
+  when: ansible_pkg_mgr == 'apt'
+
 - name: Install HAProxy Packages
   package:
     name: "{{ item }}"
