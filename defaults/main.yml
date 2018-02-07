@@ -10,15 +10,15 @@ haproxy_stats_pass: "password"
 haproxy_install_hatop: True
 
 haproxy_errors:
-  - { code: 400, short: "Bad request", long: "Bad request (400)" }
-  - { code: 403, short: "Forbidden", long: "Forbidden. You may not have necessary permissions (403)" }
-  - { code: 405, short: "Method Not Allowed", long: "Requested method is not supported for this resource (405)" }
-  - { code: 408, short: "Request timeout", long: "Server timed out waiting for the request (408)" }
-  - { code: 429, short: "Too many requests", long: "You may have sent too many requests (429)" }
-  - { code: 500, short: "Internal Server Error", long: "Server has experienced an internal error (500)" }
-  - { code: 502, short: "Bad Gateway", long: "Bad Gateway (502)" }
-  - { code: 503, short: "Service Unavailable", long: "Service you are trying to reach is unavailable (503)" }
-  - { code: 504, short: "Gateway Timeout", long: "Gateway Timeout (504)" }
+  - { code: 400, short: "Bad request", long: "Loadbalancer says: Bad request (400)" }
+  - { code: 403, short: "Forbidden", long: "Loadbalancer says: Forbidden. You may not have necessary permissions (403)" }
+  - { code: 405, short: "Method Not Allowed", long: "Loadbalancer says: Requested method is not supported for this resource (405)" }
+  - { code: 408, short: "Request timeout", long: "Loadbalancer says: Server timed out waiting for the request (408)" }
+  - { code: 429, short: "Too many requests", long: "Loadbalancer says: You may have sent too many requests (429)" }
+  - { code: 500, short: "Internal Server Error", long: "Loadbalancer says: Server has experienced an internal error (500)" }
+  - { code: 502, short: "Bad Gateway", long: "Loadbalancer says: Bad Gateway (502)" }
+  - { code: 503, short: "Service Unavailable", long: "Loadbalancer says: Service you are trying to reach is unavailable (503)" }
+  - { code: 504, short: "Gateway Timeout", long: "Loadbalancer says: Gateway Timeout (504)" }
 
 haproxy_timeouts:
   - { type: "connect", value: 5000 }
