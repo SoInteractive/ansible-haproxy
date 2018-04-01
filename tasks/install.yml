@@ -1,4 +1,11 @@
 ---
+- name: Add repository | [Debian/Ubuntu]
+  apt_repository:
+    repo: "{{ haproxy_ppa_repo }}"
+    update_cache: yes
+    validate_certs: no
+  when: ansible_pkg_mgr == 'apt' and haproxy_usa_ppa == True
+
 - name: Install HAProxy Packages
   package:
     name: "{{ item }}"

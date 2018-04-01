@@ -1,4 +1,7 @@
 ---
+haproxy_usa_ppa: False
+haproxy_ppa_repo: ppa:vbernat/haproxy-1.8
+
 haproxy_stats_socket: "/run/haproxy/admin.sock"
 haproxy_stats_enabled: True
 haproxy_ssl_enabled: False
@@ -24,6 +27,9 @@ haproxy_timeouts:
   - { type: "connect", value: 5000 }
   - { type: "client",  value: 50000 }
   - { type: "server",  value: 50000 }
+
+haproxy_additional_defaults:
+  - default-server init-addr last,libc,none
 
 haproxy_forwardfor: False
 haproxy_bind_on_non_local: True

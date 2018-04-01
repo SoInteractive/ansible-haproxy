@@ -36,3 +36,7 @@
 {% for srv in service.servers | default([]) %}
     server {{ srv.name }} {{ srv.address }} {{ srv.options | default('maxconn 15') }}
 {% endfor %}
+{# SERVICE TEMPLATES #}
+{% for tpl in service.templates | default([]) %}
+    server-template {{ tpl.prefix |default('srv') }} {{ tpl.range |default(5) }} {{ tpl.fqdn }}:{{ tpl.port |default(80) }} {{ tpl.params | default('check maxconn 15') }}
+{% endfor %}
