@@ -17,13 +17,14 @@
     src: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.tar.gz"
     dest: "/opt/"
     copy: no
-    creates: "/opt/haproxy_exporter"
+    creates: "/opt/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64"
 
 - name: Create a symlink for /opt/haproxy_exporter
   file:
     src: "/opt/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64"
     dest: /opt/haproxy_exporter
     state: link
+    force: yes
 
 - name: Copy the HAProxy Exporter systemd service file
   template:
