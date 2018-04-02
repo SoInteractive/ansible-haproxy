@@ -1,5 +1,5 @@
 ---
-haproxy_usa_ppa: False
+haproxy_use_ppa: False
 haproxy_ppa_repo: ppa:vbernat/haproxy-1.8
 
 haproxy_stats_socket: "/run/haproxy/admin.sock"
