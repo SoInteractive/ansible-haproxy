@@ -13,5 +13,5 @@
 
 - name: Check if haproxy is running (status page test)
   uri:
-    url: "http://{{ haproxy_stats_address }}:{{ haproxy_stats_port }}/"
+    url: "http://{{ haproxy_stats_address }}:{{ haproxy_stats_port }}{{ haproxy_stats_uri}}"
     status_code: 401
