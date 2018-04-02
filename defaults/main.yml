@@ -28,8 +28,7 @@ haproxy_timeouts:
   - { type: "client",  value: 50000 }
   - { type: "server",  value: 50000 }
 
-haproxy_additional_defaults:
-  - default-server init-addr last,libc,none
+haproxy_additional_defaults: []
 
 haproxy_forwardfor: False
 haproxy_bind_on_non_local: True
