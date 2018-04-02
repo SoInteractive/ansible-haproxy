@@ -24,6 +24,7 @@
     src: "/opt/haproxy_exporter-{{ haproxy_exporter_version }}.linux-amd64"
     dest: /opt/haproxy_exporter
     state: link
+    force: yes
 
 - name: Copy the HAProxy Exporter systemd service file
   template:
