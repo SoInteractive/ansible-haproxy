@@ -7,6 +7,10 @@ Ansible Role: haproxy
 
 Set up HAProxy loadbalancer with stats interface and prometheus-enabled metrics.
 
+# :warning: IMPORTANT NOTICE
+
+THIS PROJECT IS ABANDONED. WE DO NOT ACCEPT ANY NEW ISSUES AND/OR PULL REQUESTS.
+
 Example usage
 -------------
 
