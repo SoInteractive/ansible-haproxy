@@ -2,7 +2,7 @@
 - name: Install HATop from repository
   package:
     name: hatop
-    state: installed
+    state: present
   when: ansible_os_family == "Debian"
 
 - block:

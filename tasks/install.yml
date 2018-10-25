@@ -8,13 +8,12 @@
 
 - name: Install HAProxy Packages
   package:
-    name: "{{ item }}"
-    state: "installed"
+    name: "{{ haproxy_distro_packages }}"
+    state: present
   register: install_packages
-  until: install_packages|success
+  until: install_packages is success
   retries: 5
   delay: 2
-  with_items: "{{ haproxy_distro_packages }}"
 
 - name: Create haproxy conf.d dir
   file:
